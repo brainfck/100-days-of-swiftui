@@ -12,23 +12,9 @@ struct ContentView: View {
   
   var body: some View {
     VStack {
-      Button("Show Alert") {
-        showingAlert = true
-      }
-      .padding()
-      .foregroundStyle(.white)
-      .background(.red)
-      .alert("Important message", isPresented: $showingAlert) {
-        Button("Delete", role: .destructive) { }
-        Button("Cancel", role: .cancel) { }
-      } message: {
-        Text("Please read this.")
-      }
+      Text("Hello world")
     }
-  }
-  
-  func executeDelete() {
-    print("Deleting...")
+    .padding()
   }
 }
 
