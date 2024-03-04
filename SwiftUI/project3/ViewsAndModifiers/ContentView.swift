@@ -8,27 +8,37 @@
 import SwiftUI
 
 struct ContentView: View {
+//  let motto1 = Text("Draco dormiens")
+//  let motto2 = Text("nunquam titillandus")
+  
+  var motto1: some View {
+    Text("Draco dormiens")
+  }
+  
+//  var spells: some View {
+////    VStack {
+////      Text("Lumos")
+////      Text("Obliviate")
+////    }
+//    
+//    Group {
+//      Text("Lumos")
+//      Text("Obliviate")
+//    }
+//  }
+  
+  // adding ViewBuilder silently adds wrapping into TupleView so we can return multiple views
+  @ViewBuilder var spells: some View {
+    Text("Lumos")
+    Text("Obliviate")
+  }
+  
   var body: some View {
-    // There, font() is an environment modifier, which means the Gryffindor text view can override it with a custom font.
     VStack {
-      Text("Gryffindor")
-        .font(.largeTitle)
-      Text("Hufflepuff")
-      Text("Ravenclaw")
-      Text("Slytherin")
+      motto1
+        .foregroundStyle(.red)
+      spells
     }
-    .font(.title)
-    .padding()
-    
-    // That won’t work the same way: blur() is a regular modifier, so any blurs applied to child views are added to the VStack blur rather than replacing it.
-    VStack {
-      Text("Gryffindor")
-        .blur(radius: 0)
-      Text("Hufflepuff")
-      Text("Ravenclaw")
-      Text("Slytherin")
-    }
-    .blur(radius: 5)
   }
 }
 
