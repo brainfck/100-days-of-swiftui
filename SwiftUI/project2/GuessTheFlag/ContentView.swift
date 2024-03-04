@@ -49,7 +49,6 @@ struct ContentView: View {
         .init(color: Color(red: 0.1, green: 0.2, blue: 0.45), location: 0.3),
         .init(color: Color(red: 0.76, green: 0.15, blue: 0.26), location: 0.3),
       ], center: .top, startRadius: 200, endRadius: 400)
-      
       .ignoresSafeArea()
       
       Spacer()
@@ -66,7 +65,11 @@ struct ContentView: View {
             Text(countries[correctAnswer])
               .font(.largeTitle.weight(.semibold))
               .alert(scoreTitle, isPresented: $showingScore) {
-                Button("Continue", action: askQuestion)
+                Button("Continue") {
+                  if movesMade < maximumMoves {
+                    askQuestion()
+                  }
+                }
               } message: {
                 Text("Your score is \(totalScore)")
               }
