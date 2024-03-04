@@ -7,37 +7,24 @@
 
 import SwiftUI
 
-struct ContentView: View {
-//  let motto1 = Text("Draco dormiens")
-//  let motto2 = Text("nunquam titillandus")
-  
-  var motto1: some View {
-    Text("Draco dormiens")
-  }
-  
-//  var spells: some View {
-////    VStack {
-////      Text("Lumos")
-////      Text("Obliviate")
-////    }
-//    
-//    Group {
-//      Text("Lumos")
-//      Text("Obliviate")
-//    }
-//  }
-  
-  // adding ViewBuilder silently adds wrapping into TupleView so we can return multiple views
-  @ViewBuilder var spells: some View {
-    Text("Lumos")
-    Text("Obliviate")
-  }
+struct CapsuleText: View {
+  var text: String
   
   var body: some View {
-    VStack {
-      motto1
-        .foregroundStyle(.red)
-      spells
+    Text(text)
+      .font(.largeTitle)
+      .padding()
+      .foregroundStyle(.white)
+      .background(.blue)
+      .clipShape(.capsule)
+  }
+}
+
+struct ContentView: View {
+  var body: some View {
+    VStack(spacing: 10) {
+      CapsuleText(text: "First")
+      CapsuleText(text: "Second")
     }
   }
 }
