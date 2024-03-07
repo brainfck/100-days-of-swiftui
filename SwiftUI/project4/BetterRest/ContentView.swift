@@ -13,10 +13,6 @@ struct ContentView: View {
   @State private var sleepAmount = 8.0
   @State private var coffeAmount = 1
   
-  @State private var alertTitle = ""
-  @State private var alertMessage = ""
-  @State private var showingAlert = false
-  
   static var defaultWakeTime: Date {
     var components = DateComponents()
     components.hour = 7
@@ -41,32 +37,25 @@ struct ContentView: View {
         }
         
         Section("Daily coffee intake") {
-          
-//          Picker("^[\(coffeAmount) cup](inflect: true)", selection: $coffeAmount) {
-//            ForEach(0..<21) {
-//              Text("\($0)")
-//            }
-//          }
-//  
-          
-          Stepper("^[\(coffeAmount) cup](inflect: true)", value: $coffeAmount, in: 1...20)
+
+          Picker(selection: $coffeAmount, label: Text("Cups")) {
+            ForEach(1...20, id: \.self) { cupAmount in
+              Text("\(cupAmount) cup\(cupAmount != 1 ? "s" : "")")
+            }
+          }
+        }
+        
+        Section("Your ideal bedtime is") {
+          Text(calculatedBedtime())
         }
         
       }
       .navigationTitle("BetterRest")
-      .toolbar {
-        Button("Calculate", action: calculateBedtime)
-      }
-      .alert(alertTitle, isPresented: $showingAlert) {
-        Button("OK") { }
-      } message: {
-        Text(alertMessage)
-      }
     }
     .padding()
   }
   
-  func calculateBedtime() {
+  func calculatedBedtime() -> String {
     do {
       let config = MLModelConfiguration()
       let model = try SleepCalculator(configuration: config)
@@ -79,14 +68,10 @@ struct ContentView: View {
         wake: Int64(hour + minute), estimatedSleep: sleepAmount, coffee: Int64(coffeAmount))
       
       let sleepTime = wakeUp - prediction.actualSleep
-      alertTitle = "Your ideal bedtime is..."
-      alertMessage = sleepTime.formatted(date: .omitted, time: .shortened)
+      return sleepTime.formatted(date: .omitted, time: .shortened)
     } catch {
-      alertTitle = "Error"
-      alertMessage = "Sorry, there was a problem calculating your bedtime."
+      return "Sorry, there was a problem calculating your bedtime."
     }
-    
-    showingAlert = true
   }
 }
 
