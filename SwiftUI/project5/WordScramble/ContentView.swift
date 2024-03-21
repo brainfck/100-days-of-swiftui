@@ -47,6 +47,16 @@ struct ContentView: View {
     
     guard answer.count > 0 else { return }
     
+    guard isNotEqualToStartWord(word: answer) else {
+      wordError(title: "Word is not possible", message: "Do not use original word")
+      return
+    }
+    
+    guard isEnoughLength(word: answer) else {
+      wordError(title: "Words is too short", message: "Can't use words shorted then 3 letters")
+      return
+    }
+    
     guard isOriginal(word: answer) else {
       wordError(title: "Word used already", message: "Be more original")
       return
@@ -112,6 +122,14 @@ struct ContentView: View {
     errorTitle = title
     errorMessage = message
     showingError = true
+  }
+  
+  func isNotEqualToStartWord(word: String) -> Bool {
+    return word != rootWord
+  }
+  
+  func isEnoughLength(word: String) -> Bool {
+    return word.count >= 3
   }
 }
 
